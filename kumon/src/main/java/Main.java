@@ -1,5 +1,9 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Main {
 
@@ -50,9 +54,27 @@ public class Main {
         word.add("gardener");
         word.add("waiter");
 
-        word.stream().filter(w -> w.length() == 7)
-                .filter( w-> w.toCharArray()[2] == 'a')
-                .forEach(w -> System.out.println(w));
+        System.out.println(word.size());
+
+
+        int wordLength = 8;
+
+        HashMap<Integer, Character> positions = new HashMap<>();
+
+        positions.put(5, 'w');
+
+        Stream<String> stringStream = word.stream().filter(w -> w.length() == wordLength);
+
+        for (Map.Entry<Integer, Character> entry : positions.entrySet()) {
+            stringStream = stringStream.filter(w -> w.toCharArray()[entry.getKey().intValue() - 1] == entry.getValue().charValue());
+        }
+
+        List<String> collect = stringStream.collect(Collectors.toList());
+
+
+        for (Object o : collect) {
+            System.out.println(o);
+        }
 
 
     }
